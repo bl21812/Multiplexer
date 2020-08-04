@@ -233,29 +233,39 @@ class ParseTree:
       return d3
 
   # Evaluate the tree given terminal values
-  def evalTree(self, curr, a0, a1, d0, d1, d2, d3):
+  def evalTree(self, curr, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
     if curr.kind == 'f':
       if curr.val == 'and':
-        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3) and self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3)
+        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7) and self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
       elif curr.val == 'or':
-        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3) or self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3)
+        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7) or self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
       elif curr.val == 'if':
-        if self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3):
-          return self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3)
+        if self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7):
+          return self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
         else:
-          return self.evalTree(curr.children[2], a0, a1, d0, d1, d2, d3)
+          return self.evalTree(curr.children[2], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
       else: # not
-        return not self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3)
+        return not self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
     else:
       if curr.val == 'a0':
         return a0
       elif curr.val == 'a1':
         return a1
+      elif curr.val == 'a2':
+        return a2
       elif curr.val == 'd0':
         return d0
       elif curr.val == 'd1':
         return d1
       elif curr.val == 'd2':
         return d2
-      else:
+      elif curr.val == 'd3':
         return d3
+      elif curr.val == 'd4':
+        return d4
+      elif curr.val == 'd5':
+        return d5
+      elif curr.val == 'd6':
+        return d6
+      else:
+        return d7
