@@ -2,7 +2,7 @@ from Node import Node
 import random
 import queue
 
-nodes = ['a0', 'a1', 'd0', 'd1', 'd2', 'd3', 'and', 'or', 'if', 'not']
+nodes = ['a0', 'a1', 'a2', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'and', 'or', 'if', 'not']
 
 class ParseTree:
 
@@ -18,9 +18,9 @@ class ParseTree:
   def grow(self, Dmax):
     q1 = queue.Queue(-1)
     q2 = queue.Queue(-1)
-    tempIndex = random.randint(0, 9)
+    tempIndex = random.randint(0, 14)
     temp = None
-    if tempIndex < 6:
+    if tempIndex < 11:
       temp = Node('t', nodes[tempIndex])
     else:
       temp = Node('f', nodes[tempIndex])
@@ -35,8 +35,8 @@ class ParseTree:
           while not q2.empty():
             curr = q2.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-              tempIndex = random.randint(0, 9)
-              if tempIndex < 6:
+              tempIndex = random.randint(0, 14)
+              if tempIndex < 11:
                 temp = Node('t', nodes[tempIndex])
               else:
                 temp = Node('f', nodes[tempIndex])
@@ -46,8 +46,8 @@ class ParseTree:
           while not q1.empty():
             curr = q1.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-              tempIndex = random.randint(0, 9)
-              if tempIndex < 6:
+              tempIndex = random.randint(0, 14)
+              if tempIndex < 11:
                 temp = Node('t', nodes[tempIndex])
               else:
                 temp = Node('f', nodes[tempIndex])
@@ -58,14 +58,14 @@ class ParseTree:
           while not q2.empty():
             curr = q2.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child terminal nodes
-              tempIndex = random.randint(0, 5)
+              tempIndex = random.randint(0, 10)
               temp = Node('t', nodes[tempIndex])
               curr.children[i] = temp
         else:
           while not q1.empty():
             curr = q1.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child terminal nodes
-              tempIndex = random.randint(0, 5)
+              tempIndex = random.randint(0, 10)
               temp = Node('t', nodes[tempIndex])
               curr.children[i] = temp
       depth += 1
@@ -75,11 +75,11 @@ class ParseTree:
       q1 = queue.Queue(-1)
       q2 = queue.Queue(-1)
       if Dmax == 1:
-        tempIndex = random.randint(0, 5)
+        tempIndex = random.randint(0, 10)
       else:
-        tempIndex = random.randint(6, 9)
+        tempIndex = random.randint(11, 14)
       temp = None
-      if tempIndex < 6:
+      if tempIndex < 11:
         temp = Node('t', nodes[tempIndex])
       else:
         temp = Node('f', nodes[tempIndex])
@@ -93,7 +93,7 @@ class ParseTree:
             while not q2.empty():
               curr = q2.get()
               for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-                tempIndex = random.randint(6, 9)
+                tempIndex = random.randint(11, 14)
                 temp = Node('f', nodes[tempIndex])
                 curr.children[i] = temp
                 q1.put(temp)
@@ -101,7 +101,7 @@ class ParseTree:
             while not q1.empty():
               curr = q1.get()
               for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-                tempIndex = random.randint(6, 9)
+                tempIndex = random.randint(11, 14)
                 temp = Node('f', nodes[tempIndex])
                 curr.children[i] = temp
                 q2.put(temp)
@@ -110,14 +110,14 @@ class ParseTree:
             while not q2.empty():
               curr = q2.get()
               for i in range(len(curr.children)):  # Generate appropriate number of child terminal nodes
-                tempIndex = random.randint(0, 5)
+                tempIndex = random.randint(0, 10)
                 temp = Node('t', nodes[tempIndex])
                 curr.children[i] = temp
           else:
             while not q1.empty():
               curr = q1.get()
               for i in range(len(curr.children)):  # Generate appropriate number of child terminal nodes
-                tempIndex = random.randint(0, 5)
+                tempIndex = random.randint(0, 10)
                 temp = Node('t', nodes[tempIndex])
                 curr.children[i] = temp
         depth += 1
