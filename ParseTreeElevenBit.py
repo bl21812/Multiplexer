@@ -208,29 +208,43 @@ class ParseTree:
       string += "\n"
     return string
 
-  # Return fitness of tree (number of test cases passed, where 64 = max)
+  # Return fitness of tree (number of test cases passed, where max is undefined - but over 100 passed in GOOD)
   def fitness(self):
     sum = 0
     for a0 in range(2):
       for a1 in range(2):
-        for d0 in range(2):
-          for d1 in range(2):
-            for d2 in range(2):
-              for d3 in range(2):
-                if self.evalTree(self.head, a0, a1, d0, d1, d2, d3) == self.dVal(a0, a1, d0, d1, d2, d3):
-                  sum += 1
+        for a2 in range(2):
+          for d0 in range(2):
+            for d1 in range(2):
+              for d2 in range(2):
+                for d3 in range(2):
+                  for d4 in range(2):
+                    for d5 in range(2):
+                      for d6 in range(2):
+                        for d7 in range(2):
+                          if random.random() < 0.05:  # Use only 5% of cases (otherwise too expensive)
+                            if self.evalTree(self.head, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7) == self.dVal(a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
+                              sum += 1
     return sum
 
   # Return corresponding d bit value given terminal values
-  def dVal(self, a0, a1, d0, d1, d2, d3):
-    if (not a0) and (not a1):
+  def dVal(self, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
+    if (not a0) and (not a1) and (not a2):
       return d0
-    elif (not a0) and a1:
+    elif (not a0) and (not a1) and a2:
       return d1
-    elif a0 and (not a1):
+    elif (not a0) and a1 and (not a2):
       return d2
+    elif (not a0) and a1 and a2:
+      return d3:
+    elif a0 and (not a1) and (not a2):
+      return d4
+    elif a0 and (not a1) and a2:
+      return d5
+    elif a0 and a1 and (not a2):
+      return d6
     else:
-      return d3
+      return d7
 
   # Evaluate the tree given terminal values
   def evalTree(self, curr, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
@@ -269,3 +283,21 @@ class ParseTree:
         return d6
       else:
         return d7
+      
+  # Returns FULL fitness - number of correct test cases out of entire set of 2048
+  def fullFitness(self):
+    sum = 0
+    for a0 in range(2):
+      for a1 in range(2):
+        for a2 in range(2):
+          for d0 in range(2):
+            for d1 in range(2):
+              for d2 in range(2):
+                for d3 in range(2):
+                  for d4 in range(2):
+                    for d5 in range(2):
+                      for d6 in range(2):
+                        for d7 in range(2):
+                          if self.evalTree(self.head, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7) == self.dVal(a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
+                            sum += 1
+    return sum
