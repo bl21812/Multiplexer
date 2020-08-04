@@ -4,7 +4,7 @@ import queue
 
 nodes = ['a0', 'a1', 'a2', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'and', 'or', 'if', 'not']
 
-class ParseTree:
+class ParseTreeElevenBit:
 
   def __init__(self, kind, Dmax):
     self.fit = 0
