@@ -1,4 +1,4 @@
-from ParseTree import ParseTree
+from ParseTreeElevenBit import ParseTreeElevenBit
 import random
 import copy
 
@@ -11,18 +11,18 @@ class ElevenBitMultiplexer:
         self.pop = []
         for i in range(popSize):
             if i < (popSize / 2):
-                self.pop.append(ParseTree('grow', 5))
+                self.pop.append(ParseTreeElevenBit('grow', 5))
             else:
-                self.pop.append(ParseTree('full', 5))
+                self.pop.append(ParseTreeElevenBit('full', 5))
         self.best = self.pop[0]  # Best solution tree
         self.bestVal = 0  # Number of tests passed
         self.bestPerGen = []  # Fitness of best solution in each gen
+        self.gen = 1
 
     def runSim(self):
-        gen = 1
         pNodeMutate = 0.1
         pNodeCross = 0.1
-        while gen <= 2000 and self.bestVal < 64:  # Max iterations or perfect sol reached
+        while self.gen <= 3000 and self.bestVal < 100:  # Max iterations or good solution reached
             self.pop.sort(key=lambda x: x.fit, reverse=True)  # Sort population by descending fitness
             if self.pop[0].fit > self.bestVal:  # Set gbest if applicable
                 self.bestVal = self.pop[0].fit
@@ -51,6 +51,6 @@ class ElevenBitMultiplexer:
                     choices2[0].fit = choices2[0].fitness()
                 newGen.sort(key=lambda x: x.fit, reverse=True)  # Sort new generation by descending fitness
                 self.pop = self.pop[0:1] + newGen[:self.popSize - 1]  # Replace population, with new generation (minus worst) + best of old generation
-            gen += 1
-        print('Best solution, with a fitness of ' + str(self.bestVal) + "/64: ")
+            self.gen += 1
+        print('Best solution, with a fitness of ' + str(self.best.fullFitness()) + "/2048: ")
         print(self.best)

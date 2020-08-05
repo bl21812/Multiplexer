@@ -18,7 +18,10 @@ class ParseTreeElevenBit:
   def grow(self, Dmax):
     q1 = queue.Queue(-1)
     q2 = queue.Queue(-1)
-    tempIndex = random.randint(0, 14)
+    if random.random() < 0.2:
+      tempIndex = random.randint(0, 10)
+    else:
+      tempIndex = random.randint(11, 14)
     temp = None
     if tempIndex < 11:
       temp = Node('t', nodes[tempIndex])
@@ -35,7 +38,10 @@ class ParseTreeElevenBit:
           while not q2.empty():
             curr = q2.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-              tempIndex = random.randint(0, 14)
+              if random.random() < 0.2:
+                tempIndex = random.randint(0, 10)
+              else:
+                tempIndex = random.randint(11, 14)
               if tempIndex < 11:
                 temp = Node('t', nodes[tempIndex])
               else:
@@ -46,7 +52,10 @@ class ParseTreeElevenBit:
           while not q1.empty():
             curr = q1.get()
             for i in range(len(curr.children)):  # Generate appropriate number of child function nodes
-              tempIndex = random.randint(0, 14)
+              if random.random() < 0.2:
+                tempIndex = random.randint(0, 10)
+              else:
+                tempIndex = random.randint(11, 14)
               if tempIndex < 11:
                 temp = Node('t', nodes[tempIndex])
               else:
@@ -167,9 +176,9 @@ class ParseTreeElevenBit:
   def mutate(self, p):
     curr = self.head
     if random.random() < 0.5:
-      tempTree = ParseTree('grow', 3)
+      tempTree = ParseTreeElevenBit('grow', 3)
     else:
-      tempTree = ParseTree('full', 3)
+      tempTree = ParseTreeElevenBit('full', 3)
     while curr.kind != 't':
       if random.random() < p:
         curr.children[random.choice([i for i in range(len(curr.children))])] = tempTree.head
@@ -208,7 +217,7 @@ class ParseTreeElevenBit:
       string += "\n"
     return string
 
-  # Return fitness of tree (number of test cases passed, where max is undefined - but over 100 passed in GOOD)
+  # Return fitness of tree with limited test set (number of test cases passed, where max is undefined - but over 60 passed is GOOD)
   def fitness(self):
     sum = 0
     for a0 in range(2):
@@ -236,7 +245,7 @@ class ParseTreeElevenBit:
     elif (not a0) and a1 and (not a2):
       return d2
     elif (not a0) and a1 and a2:
-      return d3:
+      return d3
     elif a0 and (not a1) and (not a2):
       return d4
     elif a0 and (not a1) and a2:
@@ -250,16 +259,16 @@ class ParseTreeElevenBit:
   def evalTree(self, curr, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
     if curr.kind == 'f':
       if curr.val == 'and':
-        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7) and self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
+        return self.evalTree(curr.children[0], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7) and self.evalTree(curr.children[1], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7)
       elif curr.val == 'or':
-        return self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7) or self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
+        return self.evalTree(curr.children[0], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7) or self.evalTree(curr.children[1], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7)
       elif curr.val == 'if':
-        if self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7):
-          return self.evalTree(curr.children[1], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
+        if self.evalTree(curr.children[0], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
+          return self.evalTree(curr.children[1], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7)
         else:
-          return self.evalTree(curr.children[2], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
+          return self.evalTree(curr.children[2], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7)
       else: # not
-        return not self.evalTree(curr.children[0], a0, a1, d0, d1, d2, d3, d4, d5, d6, d7)
+        return not self.evalTree(curr.children[0], a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7)
     else:
       if curr.val == 'a0':
         return a0
