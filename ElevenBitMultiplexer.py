@@ -22,7 +22,7 @@ class ElevenBitMultiplexer:
     def runSim(self):
         pNodeMutate = 0.1
         pNodeCross = 0.1
-        while self.gen <= 3000 and self.bestVal < 100:  # Max iterations or good solution reached
+        while self.gen <= 500 and self.bestVal < 1000:  # Max iterations or good solution reached
             self.pop.sort(key=lambda x: x.fit, reverse=True)  # Sort population by descending fitness
             if self.pop[0].fit > self.bestVal:  # Set gbest if applicable
                 self.bestVal = self.pop[0].fit

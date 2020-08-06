@@ -231,7 +231,7 @@ class ParseTreeElevenBit:
                     for d5 in range(2):
                       for d6 in range(2):
                         for d7 in range(2):
-                          if random.random() < 0.05:  # Use only 5% of cases (otherwise too expensive)
+                          if random.random() < 0.50:  # Use only 50% of cases
                             if self.evalTree(self.head, a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7) == self.dVal(a0, a1, a2, d0, d1, d2, d3, d4, d5, d6, d7):
                               sum += 1
     return sum
